@@ -129,18 +129,6 @@ def create_answer_sheet(filename):
     x_start = padding_left + 3*padding
     y_start = padding_top + qr_sec_height - 4 * padding + ans_sec_height 
     for i in range(25):
-        c.drawString(x_start, y_start - 1 - i * padding, str(i + 1))
-        for j in range(5):
-            c.circle(
-                x_start + padding*1.5 + (cir_radius/2) + j * (padding), 
-                y_start + (cir_radius/2) - i * (padding), 
-                cir_radius
-            )
-
-    x_start = padding_left + 3*padding + ans_sec_width/2
-    for i in range(25):
-        c.drawString(x_start, y_start -1 - i * padding, str(i + 1 + 25))
-        
         #draw the circle row marker  for the circles
         c.rect(
             padding_left, 
@@ -150,13 +138,25 @@ def create_answer_sheet(filename):
             fill=1
         )
 
+        c.drawString(x_start, y_start - 1 - i * padding, str(i + 1))
+        c.setLineWidth(1.5)
         for j in range(5):
             c.circle(
                 x_start + padding*1.5 + (cir_radius/2) + j * (padding), 
                 y_start + (cir_radius/2) - i * (padding), 
                 cir_radius
             )
-    
+        c.setLineWidth(1)
+
+        c.drawString(x_start + ans_sec_width/2, y_start - 1 - i * padding, str(i + 26))
+        c.setLineWidth(1.5)
+        for j in range(5):
+            c.circle(
+                x_start + padding*1.5 + (cir_radius/2) + j * (padding) + ans_sec_width/2, 
+                y_start + (cir_radius/2) - i * (padding), 
+                cir_radius
+            )
+        c.setLineWidth(1)
 
     c.translate(0, 841.89)
     c.scale(1, -1)
@@ -179,7 +179,7 @@ def create_answer_sheet(filename):
             2*cor_sec_width,
             fill=1
         )
-            
+    
     c.showPage()
     c.save()
 
