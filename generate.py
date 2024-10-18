@@ -81,12 +81,15 @@ def create_answer_sheet(filename):
     )
 
     # draw ans section 
+    c.setLineWidth(2)
     c.rect(
         padding_left + padding*2, 
         padding_top + padding + qr_sec_height, 
         ans_sec_width, 
-        ans_sec_height
+        ans_sec_height,
     )
+
+    c.setLineWidth(1)
 
     # draw causion section
     c.rect(
@@ -119,30 +122,63 @@ def create_answer_sheet(filename):
         fill=1
     )
 
-    # c.translate(0, 841.89)
-    # c.scale(1, -1)
-
+    c.translate(0, 841.89)
+    c.scale(1, -1)
+    font_size = 10
+    c.setFont("Helvetica", font_size)
     x_start = padding_left + 3*padding
-    y_start = padding_top + qr_sec_height + 3 * padding
+    y_start = padding_top + qr_sec_height - 4 * padding + ans_sec_height 
     for i in range(25):
-        c.drawString(x_start, y_start + i * padding, str(i + 1))
+        c.drawString(x_start, y_start - 1 - i * padding, str(i + 1))
         for j in range(5):
             c.circle(
                 x_start + padding*1.5 + (cir_radius/2) + j * (padding), 
-                y_start + (cir_radius/2) + i * (padding), 
+                y_start + (cir_radius/2) - i * (padding), 
                 cir_radius
             )
 
     x_start = padding_left + 3*padding + ans_sec_width/2
     for i in range(25):
-        c.drawString(x_start, y_start + i * padding, str(i + 1 + 25))
+        c.drawString(x_start, y_start -1 - i * padding, str(i + 1 + 25))
+        
+        #draw the circle row marker  for the circles
+        c.rect(
+            padding_left, 
+            y_start - i * (padding),
+            2*cor_sec_width,
+            cir_radius,
+            fill=1
+        )
+
         for j in range(5):
             c.circle(
                 x_start + padding*1.5 + (cir_radius/2) + j * (padding), 
-                y_start + (cir_radius/2) + i * (padding), 
+                y_start + (cir_radius/2) - i * (padding), 
                 cir_radius
             )
     
+
+    c.translate(0, 841.89)
+    c.scale(1, -1)
+
+    # draw the circle column markers
+    x_start = padding_left + 4.5 * padding
+    y_start = padding_top + qr_sec_height + caution_sec_height + 2.5 * padding
+    for k in range(5):
+        c.rect(
+            x_start + k * padding,
+            y_start, 
+            cir_radius, 
+            2*cor_sec_width,
+            fill=1
+        )
+        c.rect(
+            x_start + k * padding + ans_sec_width/2,
+            y_start, 
+            cir_radius, 
+            2*cor_sec_width,
+            fill=1
+        )
             
     c.showPage()
     c.save()
