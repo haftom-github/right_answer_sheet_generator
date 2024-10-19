@@ -7,7 +7,7 @@ import qrcode
 def create_qr_code(data, file_name):
     qr = qrcode.QRCode(
         version=1, 
-        error_correction=qrcode.constants.ERROR_CORRECT_H, 
+        error_correction=qrcode.constants.ERROR_CORRECT_M, 
         box_size=10,
         border=0
     )
@@ -65,6 +65,7 @@ def create_answer_sheet(filename):
     c.drawImage(qr_image, padding_left, padding_top, width=qr_sec_width, height=qr_sec_height)  # Adjust size as needed    x_start = 100
 
     # draw info section
+    c.setLineWidth(2)
     c.rect(
         padding_left+qr_sec_width+padding, 
         padding_top, 
@@ -81,7 +82,6 @@ def create_answer_sheet(filename):
     )
 
     # draw ans section 
-    c.setLineWidth(2)
     c.rect(
         padding_left + padding*2, 
         padding_top + padding + qr_sec_height, 
@@ -89,7 +89,6 @@ def create_answer_sheet(filename):
         ans_sec_height,
     )
 
-    c.setLineWidth(1)
 
     # draw causion section
     c.rect(
@@ -98,6 +97,7 @@ def create_answer_sheet(filename):
         caution_sec_width, 
         caution_sec_height
     )
+    c.setLineWidth(1)
 
     # draw the corner markers
     c.rect(
